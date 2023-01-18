@@ -1,33 +1,47 @@
+import asyncio
 import logging
+
+from aiogram import types, Dispatcher
+from aiogram.types import message
 from aiogram.utils.executor import start_webhook
-from aiogram import types
 
 import messages
-from random import choice
-from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, WEBHOOK_URL
+from clients.emailc import connect, get_all_unseen_mail, close
+from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBHOOK_URL
 
 
-async def on_startup(dispatcher):
+async def on_startup(dispatcher: Dispatcher) -> None:
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+    asyncio.create_task(background_on_start())
 
 
-async def on_shutdown(dispatcher):
+async def background_on_start() -> None:
+    while True:
+        await asyncio.sleep(60)
+        print("Hello World1")
+        imap = connect()
+        [print(i) for i in get_all_unseen_mail(imap)]
+        close(imap)
+        print("Hello World2")
+
+
+async def on_shutdown(dispatcher: Dispatcher) -> None:
     await bot.delete_webhook()
 
 
 @dp.message_handler(commands=['start', 'hello'])
-async def send_welcome(message):
+async def send_welcome(message: types.Message):
     await message.answer(messages.WELCOME_MESSAGE)
 
 
 @dp.message_handler(commands=['report'])
-async def generate_report(message):
+async def generate_report(message: types.Message):
     await message.answer("Тут будет отчет")
 
 
 @dp.message_handler()
 async def echo(message: types.Message):
-    await message.answer(choice(messages.REPLY_MESSAGE))
+    await message.answer(messages.COMMAND_NOT_RECOGNIZED)
 
 
 if __name__ == '__main__':
@@ -38,6 +52,5 @@ if __name__ == '__main__':
         skip_updates=True,
         on_startup=on_startup,
         on_shutdown=on_shutdown,
-        host=WEBAPP_HOST,
-        port=WEBAPP_PORT,
+        host=WEBAPP_HOST
     )
