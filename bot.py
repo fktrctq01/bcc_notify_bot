@@ -4,22 +4,8 @@ from aiogram import types
 
 import messages
 from random import choice
-from config import WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, bot, dp
+from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT, WEBHOOK_URL
 
-
-# @bot.message_handler(commands=['start', 'hello'])
-# def send_welcome(message):
-#     bot.reply_to(message, messages.WELCOME_MESSAGE)
-#
-#
-# @bot.message_handler(commands=['report'])
-# def generate_report(message):
-#     bot.reply_to(message, "тут будет отчет")
-#
-#
-# @bot.message_handler(func=lambda msg: True)
-# def echo_all(message):
-#     bot.reply_to(message, choice(messages.REPLY_MESSAGE))
 
 async def on_startup(dispatcher):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
