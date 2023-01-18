@@ -2,8 +2,8 @@ import os
 from aiogram.dispatcher import Dispatcher
 from aiogram import Bot
 
-TOKEN = "5809115649:AAFY_VbsgGe7RvCZA2Fu12-KnaEG-8W1e4E"
-# os.getenv('BOT_TOKEN')
+# TOKEN = "5809115649:AAFY_VbsgGe7RvCZA2Fu12-KnaEG-8W1e4E"
+TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
@@ -18,8 +18,8 @@ WEBAPP_PORT = os.getenv('PORT', default=8000)
 
 # email settings
 EMAIL = "bcc_notification@mail.ru"
-EMAIL_PWD = "RbyFg9pdnvBaqwy1NSPw"
-# EMAIL_PWD = os.getenv('EMAIL_PWD')
+# EMAIL_PWD = "RbyFg9pdnvBaqwy1NSPw"
+EMAIL_PWD = os.getenv('EMAIL_PWD')
 SMTP_SERVER = "imap.mail.ru"
 
 PATTERN_TEXT = r'Уважаемый\(-ая\), \w+ \w+ \w+! ' \
