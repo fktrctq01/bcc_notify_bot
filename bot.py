@@ -17,15 +17,12 @@ async def on_startup(dispatcher: Dispatcher) -> None:
 
 async def background_on_start() -> None:
     while True:
-        await asyncio.sleep(60)
-        logging.INFO("Hello World1")
-        print("Hello World1")
+        await bot.send_message("Hello")
         imap = connect()
-        lst = get_all_unseen_mail(imap)
-        logging.INFO(*lst)
+        all_unseen_mail = get_all_unseen_mail(imap)
         close(imap)
-        print("Hello World2")
-        logging.INFO("Hello World2")
+        await bot.send_message(*all_unseen_mail)
+        await asyncio.sleep(5)
 
 
 async def on_shutdown(dispatcher: Dispatcher) -> None:
