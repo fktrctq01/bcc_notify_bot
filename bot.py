@@ -7,7 +7,7 @@ from aiogram.utils.executor import start_webhook
 
 import messages
 from clients.emailc import connect, get_all_unseen_mail, close
-from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBHOOK_URL, CHAT_ID
+from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBHOOK_URL, CHAT_ID_1, CHAT_ID_2
 
 
 async def on_startup(dispatcher: Dispatcher) -> None:
@@ -21,11 +21,12 @@ async def background_on_start() -> None:
             try:
                 imap = connect()
                 for message in get_all_unseen_mail(imap):
-                    await bot.send_message(CHAT_ID, text=message, disable_web_page_preview=True)
+                    await bot.send_message(CHAT_ID_1, text=message, disable_web_page_preview=True)
+                    await bot.send_message(CHAT_ID_2, text=message, disable_web_page_preview=True)
                 close(imap)
             except TypeError as e:
                 logging.error(e)
-                await bot.send_message(CHAT_ID, text=e)
+                await bot.send_message(CHAT_ID_1, text=e)
         except BotBlocked:
             logging.error("Бот остановлен или заблокирован")
         await asyncio.sleep(30)

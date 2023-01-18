@@ -2,7 +2,9 @@ import os
 from aiogram.dispatcher import Dispatcher
 from aiogram import Bot
 
-CHAT_ID = "188871914"
+CHAT_ID_1 = "188871914"
+CHAT_ID_2 = "293108350"
+
 TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
