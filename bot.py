@@ -17,7 +17,7 @@ async def on_shutdown(dispatcher):
 
 # @dp.message_handler(commands=['start', 'hello'])
 # async def send_welcome(message):
-#     await message.answer(messages.WELCOME_MESSAGE)
+#     await message.answer("asd")
 #
 #
 # @dp.message_handler(commands=['report'])
@@ -25,7 +25,7 @@ async def on_shutdown(dispatcher):
 #     await message.answer("тут будет отчет")
 
 
-@dp.message_handler(func=lambda msg: True)
+@dp.message_handler()
 async def echo(message: types.Message):
     await message.answer(message.text)
 
