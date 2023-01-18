@@ -20,7 +20,7 @@ def close(imap: imaplib.IMAP4):
 
 
 def get_all_unseen_mail(imap: imaplib.IMAP4):
-    _, data = imap.uid('search', "ALL")  # UNSEEN
+    _, data = imap.uid('search', "UNSEEN")  # ALL UNSEEN
     ids = data[0].split()
     return [get_mail_by_id(imap, id) for id in ids]
 
@@ -33,6 +33,11 @@ def get_mail_by_id(imap: imaplib.IMAP4, id: int):
     body_message = str(email_message.get_payload(decode=True).decode('utf-8'))
 
     match = re.compile(PATTERN_TEXT).match(body_message)
+    if match is None:
+        raise TypeError(f"{datetime.strptime(date_message, '%a, %d %b %Y %H:%M:%S %z')} "
+                        f"email не соответствует формату."
+                        f"\n{body_message}")
+
     return (
         EmailDto()
         .with_id(id)

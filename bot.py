@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import types, Dispatcher
+from aiogram.utils.exceptions import BotBlocked
 from aiogram.utils.executor import start_webhook
 
 import messages
@@ -16,13 +17,18 @@ async def on_startup(dispatcher: Dispatcher) -> None:
 
 async def background_on_start() -> None:
     while True:
-        await bot.send_message(CHAT_ID, text="Hello")
-        imap = connect()
-        all_unseen_mail = get_all_unseen_mail(imap)
-        for message in all_unseen_mail:
-            await bot.send_message(CHAT_ID, text=message)
-        close(imap)
-        await asyncio.sleep(60)
+        try:
+            try:
+                imap = connect()
+                for message in get_all_unseen_mail(imap):
+                    await bot.send_message(CHAT_ID, text=message)
+                close(imap)
+            except TypeError as e:
+                logging.error(e)
+                await bot.send_message(CHAT_ID, text=e)
+        except BotBlocked:
+            logging.error("Бот остановлен или заблокирован")
+        await asyncio.sleep(30)
 
 
 async def on_shutdown(dispatcher: Dispatcher) -> None:
