@@ -15,19 +15,19 @@ async def on_shutdown(dispatcher):
     await bot.delete_webhook()
 
 
-@dp.message_handler(commands=['start', 'hello'])
-async def send_welcome(message):
-    await message.answer(messages.WELCOME_MESSAGE)
-
-
-@dp.message_handler(commands=['report'])
-async def generate_report(message):
-    await message.answer("тут будет отчет")
+# @dp.message_handler(commands=['start', 'hello'])
+# async def send_welcome(message):
+#     await message.answer(messages.WELCOME_MESSAGE)
+#
+#
+# @dp.message_handler(commands=['report'])
+# async def generate_report(message):
+#     await message.answer("тут будет отчет")
 
 
 @dp.message_handler(func=lambda msg: True)
 async def echo(message: types.Message):
-    await message.answer(choice(messages.REPLY_MESSAGE))
+    await message.answer(message.text)
 
 
 if __name__ == '__main__':
