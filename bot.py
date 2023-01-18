@@ -2,12 +2,11 @@ import asyncio
 import logging
 
 from aiogram import types, Dispatcher
-from aiogram.types import message
 from aiogram.utils.executor import start_webhook
 
 import messages
 from clients.emailc import connect, get_all_unseen_mail, close
-from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBHOOK_URL
+from config import bot, dp, WEBHOOK_PATH, WEBAPP_HOST, WEBHOOK_URL, CHAT_ID
 
 
 async def on_startup(dispatcher: Dispatcher) -> None:
@@ -17,14 +16,13 @@ async def on_startup(dispatcher: Dispatcher) -> None:
 
 async def background_on_start() -> None:
     while True:
-        await bot.send_message("188871914", text="Hello")
-
+        await bot.send_message(CHAT_ID, text="Hello")
         imap = connect()
         all_unseen_mail = get_all_unseen_mail(imap)
         for message in all_unseen_mail:
-            await bot.send_message("188871914", text=message)
+            await bot.send_message(CHAT_ID, text=message)
         close(imap)
-        await asyncio.sleep(5)
+        await asyncio.sleep(60)
 
 
 async def on_shutdown(dispatcher: Dispatcher) -> None:

@@ -2,6 +2,7 @@ import os
 from aiogram.dispatcher import Dispatcher
 from aiogram import Bot
 
+CHAT_ID = "188871914"
 # TOKEN = "5809115649:AAFY_VbsgGe7RvCZA2Fu12-KnaEG-8W1e4E"
 TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=TOKEN)
@@ -27,3 +28,4 @@ PATTERN_TEXT = r'Уважаемый\(-ая\), \w+ \w+ \w+! ' \
                r'произошло списание на сумму (?P<trn_amount>[\d\.]+) (?P<trn_currency>[a-zA-Z]+)\. ' \
                r'На текущий момент [\d\.]+ [\d\.]+ остаток на Вашей карте [\d\*]{16} ' \
                r'составляет (?P<balance>[\d\.]+) (?P<balance_currency>[a-zA-Z]+)\. (?P<merchant>.+)'
+
