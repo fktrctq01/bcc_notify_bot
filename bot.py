@@ -18,10 +18,12 @@ async def on_startup(dispatcher: Dispatcher) -> None:
 async def background_on_start() -> None:
     while True:
         await bot.send_message("me", text="Hello")
+
         imap = connect()
         all_unseen_mail = get_all_unseen_mail(imap)
+        for message in all_unseen_mail:
+            await bot.send_message("me", text=message)
         close(imap)
-        await bot.send_message("me", all_unseen_mail.__str__())
         await asyncio.sleep(5)
 
 

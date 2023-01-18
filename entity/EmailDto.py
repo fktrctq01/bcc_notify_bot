@@ -20,7 +20,7 @@ class EmailDto:
 
     @property
     def email_time(self):
-        return self.email_time
+        return self._email_time
 
     def with_email_time(self, time: str):
         self._email_time = time
@@ -79,3 +79,8 @@ class EmailDto:
                f"trn_time={self._trn_time} trn_amount={self._trn_amount} trn_currency={self._trn_currency} " \
                f"balance={self._balance} balance_currency={self._balance_currency} " \
                f"merchant={self._merchant}"
+
+    def __str__(self) -> str:
+        return f"{self._trn_time.strftime('%d.%m %H:%M')} покупка на сумму {self._trn_amount} {self._trn_currency} {self._merchant}" \
+               f"\nБаланс {self._balance} {self._balance_currency}" \
+               f"\nУведомление получено {self._email_time.strftime('%d.%m %H:%M')}"
