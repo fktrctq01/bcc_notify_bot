@@ -19,6 +19,7 @@ async def background_on_start() -> None:
     while True:
         try:
             try:
+                logging.info("Проверяем почту")
                 imap = connect()
                 for message in get_all_unseen_mail(imap):
                     await bot.send_message(CHAT_ID_1, text=message, disable_web_page_preview=True)
@@ -43,12 +44,7 @@ async def send_welcome(message: types.Message):
 
 @dp.message_handler(commands=['report'])
 async def generate_report(message: types.Message):
-    await message.answer("Тут будет отчет")
-
-
-@dp.message_handler()
-async def echo(message: types.Message):
-    await message.answer(messages.COMMAND_NOT_RECOGNIZED)
+    pass
 
 
 if __name__ == '__main__':
