@@ -22,8 +22,8 @@ async def background_on_start() -> None:
                 logging.info("Проверяем почту")
                 imap = connect()
                 for message in get_all_unseen_mail(imap):
-                    await bot.send_message(CHAT_ID_1, text=message, disable_web_page_preview=True)
-                    await bot.send_message(CHAT_ID_2, text=message, disable_web_page_preview=True)
+                    await bot.send_message(CHAT_ID_1, text=f'Банк ЦентрКредит:\n{message}', disable_web_page_preview=True)
+                    await bot.send_message(CHAT_ID_2, text=f'Банк ЦентрКредит:\n{message}', disable_web_page_preview=True)
                 close(imap)
             except TypeError as e:
                 logging.error(e)
