@@ -19,9 +19,13 @@ async def background_on_start() -> None:
     while True:
         try:
             try:
-                logging.info("Проверяем почту")
+                logging.info("-"*15)
+                logging.info("Проверяем почту:")
                 imap = connect()
-                for message in get_all_unseen_mail(imap):
+                messages = get_all_unseen_mail(imap)
+                logging.info(f"Есть {len(messages)} новых непрочитанных email")
+                for message in messages:
+                    logging.info(f"Инициируем отправку в tg")
                     await bot.send_message(CHAT_ID_1, text=f'Банк ЦентрКредит:\n{message}', disable_web_page_preview=True)
                     await bot.send_message(CHAT_ID_2, text=f'Банк ЦентрКредит:\n{message}', disable_web_page_preview=True)
                 close(imap)
